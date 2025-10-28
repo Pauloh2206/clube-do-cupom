@@ -1,4 +1,4 @@
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 import { Coupon, CouponStatus, Platform } from "../types";
 
 const ALL_PLATFORMS: Platform[] = ['uber', '99', 'ifood', 'rappi', 'mercadolivre', 'magazineluiza'];
@@ -67,20 +67,20 @@ function getCorrectedStatus(coupon: any): CouponStatus {
 }
 
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = new GoogleGenerativeAI(process.env.API_KEY || '');
 
 const responseSchema = {
-    type: Type.ARRAY,
+    type: SchemaType.ARRAY,
     items: {
-        type: Type.OBJECT,
+        type: SchemaType.OBJECT,
         properties: {
-            id: { type: Type.STRING, description: 'Unique ID for the coupon.' },
-            platform: { type: Type.STRING, description: `Platform name, one of: ${ALL_PLATFORMS.join(', ')}.` },
-            title: { type: Type.STRING, description: 'Short title for the coupon.' },
-            code: { type: Type.STRING, description: 'The coupon code.' },
-            description: { type: Type.STRING, description: 'Brief description of the coupon.' },
-            validity: { type: Type.STRING, description: 'Validity or expiry information, preferably in YYYY-MM-DD format.' },
-            status: { type: Type.STRING, description: 'Coupon status: "active" for valid coupons, "expired" for expired ones.' },
+            id: { type: SchemaType.STRING, description: 'Unique ID for the coupon.' },
+            platform: { type: SchemaType.STRING, description: `Platform name, one of: ${ALL_PLATFORMS.join(', ')}.` },
+            title: { type: SchemaType.STRING, description: 'Short title for the coupon.' },
+            code: { type: SchemaType.STRING, description: 'The coupon code.' },
+            description: { type: SchemaType.STRING, description: 'Brief description of the coupon.' },
+            validity: { type: SchemaType.STRING, description: 'Validity or expiry information, preferably in YYYY-MM-DD format.' },
+            status: { type: SchemaType.STRING, description: 'Coupon status: "active" for valid coupons, "expired" for expired ones.' },
         },
         required: ["id", "platform", "title", "code", "description", "validity", "status"],
     },
@@ -96,8 +96,8 @@ O nome da plataforma deve ser um dos seguintes em minúsculas: ${platformList}.
 Gere um ID único para cada cupom.
 Retorne apenas o JSON.`;
         
-        const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+        const model = ai.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+        const response = await model.generateContent({
             contents: prompt,
             config: {
                 responseMimeType: 'application/json',
@@ -105,7 +105,7 @@ Retorne apenas o JSON.`;
             }
         });
 
-        const jsonText = response.text.trim();
+        const jsonText = response.response.text().trim();
         const parsedCoupons = JSON.parse(jsonText) as any[];
 
         const validCoupons: Coupon[] = parsedCoupons

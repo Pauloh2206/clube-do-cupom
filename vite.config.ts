@@ -9,7 +9,16 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    host: true
+    host: '0.0.0.0',
+    strictPort: false,
+    hmr: {
+      clientPort: 5173
+    }
+  },
+  preview: {
+    port: 5173,
+    host: '0.0.0.0',
+    strictPort: false
   },
   build: {
     outDir: 'dist',
