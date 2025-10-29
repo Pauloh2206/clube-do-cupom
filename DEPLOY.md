@@ -20,7 +20,7 @@ ssh usuario@seu-servidor.com
 ```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y nodejs npm nginx git
-sudo npm install -g pnpm
+sudo # npm (já vem com Node.js)
 ```
 
 ### 3. Clonar e Configurar Projeto
@@ -40,8 +40,8 @@ API_KEY=sua_chave_api_gemini_aqui
 ### 4. Build do Projeto
 
 ```bash
-sudo pnpm install
-sudo pnpm build
+sudo npm install
+sudo npm run build
 ```
 
 ### 5. Configurar Nginx
@@ -106,8 +106,8 @@ Seu site está no ar em `http://seu-dominio.com` (ou `https://` se configurou SS
 ```bash
 cd /var/www/clube-do-cupom
 sudo git pull
-sudo pnpm install
-sudo pnpm build
+sudo npm install
+sudo npm run build
 sudo systemctl restart nginx
 ```
 

@@ -46,9 +46,9 @@ apt install -y nodejs npm nginx git curl
 print_success "Dependências instaladas"
 echo ""
 
-echo "PASSO 3: Instalando pnpm..."
-npm install -g pnpm
-print_success "pnpm instalado"
+echo "PASSO 3: Verificando npm..."
+npm --version
+print_success "npm verificado"
 echo ""
 
 echo "PASSO 4: Clonando repositório..."
@@ -78,12 +78,12 @@ print_success "Arquivo .env criado (PRECISA SER EDITADO!)"
 echo ""
 
 echo "PASSO 6: Instalando dependências do projeto..."
-pnpm install
+npm install
 print_success "Dependências instaladas"
 echo ""
 
 echo "PASSO 7: Fazendo build do projeto..."
-pnpm build
+npm run build
 print_success "Build concluído"
 echo ""
 
@@ -199,7 +199,7 @@ echo "   sudo nano /var/clube-do-cupom/.env"
 echo ""
 echo "2. Depois de configurar o .env, faça rebuild:"
 echo "   cd /var/clube-do-cupom"
-echo "   sudo pnpm build"
+echo "   sudo npm run build"
 echo "   sudo systemctl restart nginx"
 echo ""
 echo "3. Acesse seu site:"

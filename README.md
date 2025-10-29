@@ -46,7 +46,7 @@ Antes de começar, certifique-se de ter instalado:
 cd clube-do-cupom
 npm install
 # ou
-pnpm install
+npm install
 ```
 
 ### 2. Configurar Variáveis de Ambiente
@@ -62,7 +62,7 @@ API_KEY=sua_chave_api_gemini_aqui
 ```bash
 npm run dev
 # ou
-pnpm dev
+npm run dev
 ```
 
 A aplicação estará disponível em `http://localhost:5173`
@@ -89,7 +89,7 @@ sudo apt install -y nodejs npm nginx git
 Instale o pnpm globalmente (opcional, mas recomendado):
 
 ```bash
-sudo npm install -g pnpm
+sudo # npm (já vem com Node.js)
 ```
 
 #### Passo 2: Clonar o Projeto
@@ -119,8 +119,8 @@ Salve com `Ctrl+O`, Enter, e saia com `Ctrl+X`.
 #### Passo 4: Instalar Dependências e Build
 
 ```bash
-sudo pnpm install
-sudo pnpm build
+sudo npm install
+sudo npm run build
 ```
 
 Isso criará uma pasta `dist` com os arquivos estáticos otimizados.
@@ -226,7 +226,7 @@ app.listen(PORT, () => {
 
 ```bash
 sudo pnpm add express
-sudo pnpm build
+sudo npm run build
 pm2 start server.js --name clube-do-cupom
 pm2 startup
 pm2 save
@@ -257,8 +257,8 @@ Para atualizar o site após fazer alterações:
 ```bash
 cd /var/www/clube-do-cupom
 sudo git pull origin main
-sudo pnpm install
-sudo pnpm build
+sudo npm install
+sudo npm run build
 sudo systemctl restart nginx
 ```
 
